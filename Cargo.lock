@@ -67,9 +67,9 @@ checksum = "edd0f118536f44f5ccd48bcb8b111bdc3de888b58c74639dfb034a357d0f206d"
 
 [[package]]
 name = "embedded-io-adapters"
-version = "0.6.0"
+version = "0.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f5aa94ce6a11ae812b533ab3cae0b12a26f231b49324273faa2fd5f4e1775a8c"
+checksum = "b03facd2b544d24916f312a6026c1b548b8af012f788a554d498afdc8ef9c775"
 dependencies = [
  "embedded-io",
  "embedded-io-async",
