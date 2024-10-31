@@ -15,7 +15,7 @@ alloc = ["serde_json/alloc"]
 json = ["dep:serde", "dep:serde-json-core"]
 
 [dependencies]
-embedded-io-async = "0.6"
+embedded-io-async = "0.6.1"
 httparse = { version = "1.8.0", default-features = false }
 heapless = { version = "0.8", default-features = false }
 
