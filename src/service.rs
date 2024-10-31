@@ -25,9 +25,9 @@ pub trait Service {
     // TODO: this should come from crate::io or somewhere else
     type BodyError: embedded_io_async::Error;
 
-    fn serve<R: Read, W: Write<Error = R::Error>>(
+    fn serve<R: Read<Error = E>, W: Write<Error = E>, E>(
         &self,
         reader: R,
         writer: W,
-    ) -> impl Future<Output = Result<(), ServiceError<R::Error, Self::BodyError>>>;
+    ) -> impl Future<Output = Result<(), ServiceError<E, Self::BodyError>>>;
 }

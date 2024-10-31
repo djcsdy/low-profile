@@ -9,7 +9,7 @@
 //! # Examples
 //!
 //! ```
-//! use http::StatusCode;
+//! use low_profile::http::StatusCode;
 //!
 //! assert_eq!(StatusCode::from_u16(200).unwrap(), StatusCode::OK);
 //! assert_eq!(StatusCode::NOT_FOUND, 404);
@@ -33,7 +33,7 @@ use core::{fmt, num::NonZeroU16};
 /// # Examples
 ///
 /// ```
-/// use http::StatusCode;
+/// use low_profile::http::StatusCode;
 ///
 /// assert_eq!(StatusCode::from_u16(200).unwrap(), StatusCode::OK);
 /// assert_eq!(StatusCode::NOT_FOUND.as_u16(), 404);
@@ -59,7 +59,7 @@ impl StatusCode {
     /// # Example
     ///
     /// ```
-    /// use http::StatusCode;
+    /// use low_profile::http::StatusCode;
     ///
     /// let ok = StatusCode::from_u16(200).unwrap();
     /// assert_eq!(ok, StatusCode::OK);
@@ -110,7 +110,7 @@ impl StatusCode {
     /// # Example
     ///
     /// ```
-    /// let status = http::StatusCode::OK;
+    /// let status = low_profile::http::StatusCode::OK;
     /// assert_eq!(status.as_u16(), 200);
     /// ```
     #[inline]
@@ -133,7 +133,7 @@ impl StatusCode {
     /// # Example
     ///
     /// ```
-    /// let status = http::StatusCode::OK;
+    /// let status = low_profile::http::StatusCode::OK;
     /// assert_eq!(status.canonical_reason(), Some("OK"));
     /// ```
     pub fn canonical_reason(&self) -> Option<&'static str> {
@@ -182,7 +182,7 @@ impl fmt::Debug for StatusCode {
 /// # Example
 ///
 /// ```
-/// # use http::StatusCode;
+/// # use low_profile::http::StatusCode;
 /// assert_eq!(format!("{}", StatusCode::OK), "200 OK");
 /// ```
 impl fmt::Display for StatusCode {

@@ -126,11 +126,11 @@ where
 impl<R: Route<S> + 'static, S, HasRoute> Service for Router<S, R, S, HasRoute> {
     type BodyError = <<R::Response as IntoResponse>::Body as ErrorType>::Error;
 
-    async fn serve<Re: Read, Wr: Write<Error = Re::Error>>(
+    async fn serve<Re: Read<Error = E>, Wr: Write<Error = E>, E>(
         &self,
         mut reader: Re,
         mut writer: Wr,
-    ) -> Result<(), ServiceError<Re::Error, Self::BodyError>> {
+    ) -> Result<(), ServiceError<E, Self::BodyError>> {
         // TODO: buf size, optinally make the buffer an arg
         let mut buf = [0u8; 2048];
 
