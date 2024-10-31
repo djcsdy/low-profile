@@ -1,11 +1,7 @@
 #![no_std]
-#![allow(stable_features)]
 #![feature(
-    async_fn_in_trait,
     type_alias_impl_trait,
-    return_position_impl_trait_in_trait,
-    maybe_uninit_slice,
-    const_waker
+    maybe_uninit_slice
 )]
 
 #[cfg(feature = "alloc")]
