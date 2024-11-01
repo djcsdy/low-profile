@@ -3,7 +3,6 @@ use core::future::Future;
 use crate::{error::ProtocolError, Read, Write};
 
 #[derive(Debug)]
-#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub enum ServiceError<IO, BODY> {
     ProtocolError(ProtocolError),
     Io(IO),
@@ -18,6 +17,18 @@ impl<IO: embedded_io_async::Error, BODY: embedded_io_async::Error> embedded_io_a
             Self::Io(err) => err.kind(),
             Self::Body(err) => err.kind(),
             Self::ProtocolError(..) => embedded_io_async::ErrorKind::Other,
+        }
+    }
+}
+
+// defmt::Format is not implemented for embedded_io_async::Error, so provide our own implementation.
+#[cfg(feature = "defmt")]
+impl<IO: embedded_io_async::Error, BODY: embedded_io_async::Error> defmt::Format for ServiceError<IO, BODY> {
+    fn format(&self, f: defmt::Formatter) {
+        match self {
+            ServiceError::ProtocolError(err) => defmt::write!(f, "{}", err),
+            ServiceError::Io(err) => defmt::write!(f, "{}", err.kind()),
+            ServiceError::Body(err) => defmt::write!(f, "{}", err.kind()),
         }
     }
 }
