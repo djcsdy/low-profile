@@ -1,5 +1,4 @@
 use core::fmt::Debug;
-
 use embedded_io_async::{Error, ErrorKind};
 
 use crate::{ErrorType, IntoResponse, Read, Response};
@@ -14,6 +13,16 @@ impl<L: Debug, R: Debug> Debug for Either<L, R> {
         match self {
             Either::Left(left) => left.fmt(f),
             Either::Right(right) => right.fmt(f),
+        }
+    }
+}
+
+#[cfg(feature = "defmt")]
+impl<L: defmt::Format, R: defmt::Format> defmt::Format for Either<L, R> {
+    fn format(&self, f: defmt::Formatter) {
+        match self {
+            Either::Left(left) => defmt::write!(f, "{:?}", left),
+            Either::Right(right) => defmt::write!(f, "{:?}", right),
         }
     }
 }

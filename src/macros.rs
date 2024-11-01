@@ -8,6 +8,7 @@ macro_rules! define_rejection {
     ) => {
         $(#[$m])*
         #[derive(Debug)]
+        #[cfg_attr(feature = "defmt", derive(defmt::Format))]
         #[non_exhaustive]
         pub struct $name;
 
@@ -51,6 +52,7 @@ macro_rules! composite_rejection {
     ) => {
         $(#[$m])*
         #[derive(Debug)]
+        #[cfg_attr(feature = "defmt", derive(defmt::Format))]
         #[non_exhaustive]
         pub enum $name {
             $(

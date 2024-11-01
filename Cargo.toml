@@ -13,6 +13,7 @@ default = ["heapless"]
 heapless = []
 alloc = ["serde_json/alloc"]
 json = ["dep:serde", "dep:serde-json-core"]
+defmt = ["dep:defmt"]
 
 [dependencies]
 embedded-io-async = "0.6.1"
@@ -22,6 +23,7 @@ heapless = { version = "0.8", default-features = false }
 serde = { version = "1", default-features = false, optional = true }
 serde_json = { version = "1", default-features = false, optional = true }
 serde-json-core = { version = "0.5", default-features = false, optional = true }
+defmt = { version = "0.3.8", optional = true }
 
 [dev-dependencies]
 tokio = { version = "1.31", features = ["rt", "io-util", "net", "time", "macros"] }

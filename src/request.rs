@@ -50,6 +50,13 @@ impl<'a, R, P> fmt::Debug for Request<'a, R, P> {
     }
 }
 
+#[cfg(feature = "defmt")]
+impl<'a, R, P> defmt::Format for Request<'a, R, P> {
+    fn format(&self, f: defmt::Formatter) {
+        defmt::write!(f, "Request {{ method = {:?}, path = {:?}, query = {:?}, .. }}", &self.parts.method, &self.parts.path, &self.parts.query)
+    }
+}
+
 pub struct Parts<'a, P> {
     pub method: Method<'a>,
     pub path: &'a str,

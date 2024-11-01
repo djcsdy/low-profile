@@ -10,9 +10,11 @@ pub use request_parts::*;
 
 mod private {
     #[derive(Debug, Clone, Copy)]
+    #[cfg_attr(feature = "defmt", derive(defmt::Format))]
     pub enum ViaParts {}
 
     #[derive(Debug, Clone, Copy)]
+    #[cfg_attr(feature = "defmt", derive(defmt::Format))]
     pub enum ViaRequest {}
 }
 

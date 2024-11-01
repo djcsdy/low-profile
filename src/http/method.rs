@@ -133,6 +133,13 @@ impl<'a> fmt::Display for Method<'a> {
     }
 }
 
+#[cfg(feature = "defmt")]
+impl<'a> defmt::Format for Method<'a> {
+    fn format(&self, f: defmt::Formatter) {
+        defmt::write!(f, "{}", self.as_str())
+    }
+}
+
 impl<'a> Default for Method<'a> {
     #[inline]
     fn default() -> Method<'static> {
@@ -157,6 +164,7 @@ impl<'a> TryFrom<&'a str> for Method<'a> {
 }
 
 /// A possible error value when converting `Method` from bytes.
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub struct InvalidMethod(());
 
 impl InvalidMethod {

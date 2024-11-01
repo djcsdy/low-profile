@@ -3,6 +3,7 @@ use core::future::Future;
 use crate::{error::ProtocolError, Read, Write};
 
 #[derive(Debug)]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub enum ServiceError<IO, BODY> {
     ProtocolError(ProtocolError),
     Io(IO),

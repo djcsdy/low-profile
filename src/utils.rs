@@ -101,6 +101,7 @@ where
 impl<W: Write> WriteExt for W {}
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
+#[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub(crate) enum WriteFmtError<E> {
     /// An error was encountered while formatting.
     FmtError,

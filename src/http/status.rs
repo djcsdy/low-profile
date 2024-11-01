@@ -196,6 +196,13 @@ impl fmt::Display for StatusCode {
     }
 }
 
+#[cfg(feature = "defmt")]
+impl defmt::Format for StatusCode {
+    fn format(&self, f: defmt::Formatter) {
+        self.0.format(f)
+    }
+}
+
 impl Default for StatusCode {
     #[inline]
     fn default() -> StatusCode {
@@ -501,5 +508,12 @@ impl fmt::Debug for InvalidStatusCode {
 impl fmt::Display for InvalidStatusCode {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.write_str("invalid status code")
+    }
+}
+
+#[cfg(feature = "defmt")]
+impl defmt::Format for InvalidStatusCode {
+    fn format(&self, f: defmt::Formatter) {
+        defmt::write!(f, "InvalidStatusCode");
     }
 }
