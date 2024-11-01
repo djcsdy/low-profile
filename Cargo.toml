@@ -13,7 +13,7 @@ default = ["heapless"]
 heapless = []
 alloc = ["serde_json/alloc"]
 json = ["dep:serde", "dep:serde-json-core"]
-defmt = ["dep:defmt"]
+defmt = ["dep:defmt", "embedded-io-async/defmt-03"]
 
 [dependencies]
 embedded-io-async = "0.6.1"
