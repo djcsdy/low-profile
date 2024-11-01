@@ -1,4 +1,4 @@
-use core::{fmt, mem::MaybeUninit, str::Utf8Error};
+use core::{fmt, str::Utf8Error};
 
 use crate::{http::Method, ErrorType, Read};
 
@@ -99,7 +99,7 @@ impl<'a> Headers<'a> {
     }
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default)]
 pub(crate) struct HeaderIndices {
     pub name: (usize, usize),
     pub value: (usize, usize),
@@ -109,7 +109,7 @@ pub(crate) struct HeaderIndices {
 pub(crate) fn record_header_indices(
     bytes: &[u8],
     headers: &[httparse::Header<'_>],
-    indices: &mut [MaybeUninit<HeaderIndices>],
+    indices: &mut [HeaderIndices],
 ) {
     let bytes_ptr = bytes.as_ptr() as usize;
 
@@ -121,11 +121,11 @@ pub(crate) fn record_header_indices(
         let name_end = name_start + header.name.len();
         let value_start = header.value.as_ptr() as usize - bytes_ptr;
         let value_end = value_start + header.value.len();
-
-        indices.write(HeaderIndices {
+        
+        *indices = HeaderIndices {
             name: (name_start, name_end),
             value: (value_start, value_end),
-        });
+        };
     }
 }
 

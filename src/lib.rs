@@ -1,5 +1,4 @@
 #![no_std]
-#![feature(maybe_uninit_slice)]
 
 #[cfg(feature = "alloc")]
 pub mod alloc;

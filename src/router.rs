@@ -136,10 +136,7 @@ impl<R: Route<S> + 'static, S, HasRoute> Service for Router<S, R, S, HasRoute> {
 
         const MAX_HEADERS: usize = 100;
 
-        let mut headers_indices: [MaybeUninit<HeaderIndices>; MAX_HEADERS] = unsafe {
-            // SAFETY: We can go safely from MaybeUninit array to array of MaybeUninit
-            MaybeUninit::uninit().assume_init()
-        };
+        let mut headers_indices = [HeaderIndices::default(); MAX_HEADERS];
 
         let mut pos = 0;
         let (method, path, headers, body_start) = loop {
@@ -162,9 +159,7 @@ impl<R: Route<S> + 'static, S, HasRoute> Service for Router<S, R, S, HasRoute> {
                 Ok(httparse::Status::Complete(len)) => {
                     record_header_indices(&buf, req.headers, &mut headers_indices);
 
-                    let headers = unsafe {
-                        MaybeUninit::slice_assume_init_ref(&headers_indices[..req.headers.len()])
-                    };
+                    let headers = &headers_indices[..req.headers.len()];
 
                     // TODO: I think these unwraps cant happen, double check
                     break (req.method.unwrap(), req.path.unwrap(), headers, len);
