@@ -1,8 +1,9 @@
 use crate::{http::StatusCode, Read};
 
 pub struct Response<Body> {
-    // TODO: headers
     pub status_code: StatusCode,
+    pub content_type: Option<&'static [u8]>,
+    // TODO: generalize headers
     pub body: Body,
 }
 
@@ -14,15 +15,22 @@ impl<Body> Response<Body> {
     pub fn into_body(self) -> Body {
         self.body
     }
-}
 
-impl<Body> Response<Body> {
+    pub(crate) fn with_content_type(self, content_type: Option<&'static [u8]>) -> Self {
+        Self {
+            status_code: self.status_code,
+            content_type,
+            body: self.body,
+        }
+    }
+
     pub(crate) fn map_body<F, T>(self, map: F) -> Response<T>
     where
         F: FnOnce(Body) -> T,
     {
         Response {
             status_code: self.status_code,
+            content_type: self.content_type,
             body: map(self.body),
         }
     }
@@ -59,6 +67,7 @@ impl IntoResponse for &'static str {
     fn into_response(self) -> Response<Self::Body> {
         Response {
             status_code: StatusCode::OK,
+            content_type: Some(b"text/plain"),
             body: self.as_bytes(),
         }
     }

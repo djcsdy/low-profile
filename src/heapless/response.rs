@@ -6,6 +6,7 @@ impl<const SIZE: usize> IntoResponse for heapless::Vec<u8, SIZE> {
     fn into_response(self) -> Response<Self::Body> {
         Response {
             status_code: StatusCode::OK,
+            content_type: Some(b"application/octet-stream"),
             body: Cursor::new(self),
         }
     }
@@ -17,6 +18,7 @@ impl<const SIZE: usize> IntoResponse for heapless::String<SIZE> {
     fn into_response(self) -> Response<Self::Body> {
         Response {
             status_code: StatusCode::OK,
+            content_type: Some(b"text/plain"),
             body: Cursor::new(self),
         }
     }

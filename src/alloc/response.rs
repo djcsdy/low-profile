@@ -10,6 +10,7 @@ impl IntoResponse for Vec<u8> {
     fn into_response(self) -> Response<Self::Body> {
         Response {
             status_code: StatusCode::OK,
+            content_type: Some(b"application/octet-stream"),
             body: Cursor::new(self),
         }
     }
@@ -21,6 +22,7 @@ impl IntoResponse for String {
     fn into_response(self) -> Response<Self::Body> {
         Response {
             status_code: StatusCode::OK,
+            content_type: Some(b"text/plain"),
             body: Cursor::new(self),
         }
     }

@@ -48,6 +48,9 @@ where
                     .map_body(Either::Right);
             }
         };
-        (StatusCode::OK, buf).into_response().map_body(Either::Left)
+        (StatusCode::OK, buf)
+            .into_response()
+            .with_content_type(Some(b"application/json"))
+            .map_body(Either::Left)
     }
 }

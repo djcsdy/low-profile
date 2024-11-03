@@ -214,6 +214,17 @@ impl<R: Route<S> + 'static, S, HasRoute> Service for Router<S, R, S, HasRoute> {
             .write_all(b"Connection: Close\r\n")
             .await
             .map_err(ServiceError::Io)?;
+        if let Some(content_type) = response.content_type {
+            writer
+                .write_all(b"Content-Type: ")
+                .await
+                .map_err(ServiceError::Io)?;
+            writer
+                .write_all(content_type)
+                .await
+                .map_err(ServiceError::Io)?;
+            writer.write_all(b"\r\n").await.map_err(ServiceError::Io)?;
+        }
         writer.write_all(b"\r\n").await.map_err(ServiceError::Io)?;
 
         let mut body = response.into_body();

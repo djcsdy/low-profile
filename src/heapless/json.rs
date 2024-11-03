@@ -49,9 +49,9 @@ where
             }
         };
         buffer.truncate(len);
-        // TODO: send headers
         (StatusCode::OK, buffer)
             .into_response()
+            .with_content_type(Some(b"application/json"))
             .map_body(Either::Left)
     }
 }
